@@ -30,3 +30,6 @@ class Product(models.Model):
     class Meta:
         verbose_name_plural = 'Products'
         ordering = ('-created',)
+        
+    def __str__(self):
+        return self.title
