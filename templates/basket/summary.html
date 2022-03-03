@@ -1,6 +1,4 @@
-{% extends "../store/base.html" %} {% load static %} {% block title %}Basket Summary{%endblock %} 
-
-{% block content %}
+{% extends "../store/base.html" %} {% load static %} {% block title %}Basket Summary{%endblock %} {% block content %}
 
 
 <main class="pt-5">
@@ -43,7 +41,7 @@
       </div>
       <div class="col-md-5 col-lg-4 order-md-last p-0 order-3">
         <div class="d-grid gap-2 ">
-          <a role="button" href="" class="btn btn-success fw-bold" type="button">Checkout</a>
+          <a role="button" href="{% url "payment:basket" %}" class="btn btn-success fw-bold" type="button">Checkout</a>
           <button class="btn btn-light" type="button">Save for later</button>
         </div>
       </div>
@@ -84,6 +82,94 @@
     
   </div>
 </main>
+
+
+
+
+{% comment %} 
+
+
+
+    
+
+          {% for item in basket %} {% with product=item.product %}
+
+          <div class="product-item" data-index="asdproduct.idasd" class="mb-4 container">
+            <div class="row p-3">
+              <div class="col-md-2 p-0">
+                <img class="img-fluid mx-auto d-block" width="120px" alt="Responsive image"
+                  src="asd product.image.url asd" />
+              </div>
+
+              <div class="col-md-10">
+                <a href="asd product.get_absolute_url asd" class="text-decoration-none text-reset fs-6">
+                  asd product.title asd
+                </a>
+                <div>
+                  <div class="col">
+                    <div class="row">
+                      <div class="col-6"></div>
+                      <div class="col-6 text-end">
+                        <span class="h6 fw-bold">£asd product.price asd</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="select">Qty</label>
+                    <select id="selectasdproduct.idasd">
+                      <option selected>asditem.qtyasd</option>
+                      <option value="">1</option>
+                      <option value="">2</option>
+                      <option value="">3</option>
+                      <option value="">4</option>
+                    </select>
+                    <button type="button" id="update-button" data-index="asdproduct.idasd"
+                      class="btn btn-outline-secondary btn-sm update-button">
+                      Update
+                    </button>
+                    <button type="button" id="delete-button" data-index="asdproduct.idasd"
+                      class="btn btn-outline-secondary btn-sm delete-button">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+          </div>
+          {% endwith %} {% endfor %}
+   <div class="col-12 text-end">
+      <div class="h6 fw-bold">Sub Total: £<div id="subtotal" class="d-inline-flex">asdbasket.get_subtotal_priceasd</div></div>
+    </div>
+        </div>
+      </div>
+      <div class="nav left col-12 p-4">
+        <div class="title-band title-in-block w-100">
+          <h2 class="h5">Basket Summary</h2>
+          <hr>
+          <dl>
+            <dt>Delivery to UK Mainland <a href="#" class="small text-uppercase text-decoration-none fs12">Change</a>
+            </dt>
+            <dd><span class="price">£11.50</span></dd>
+            <a href="#" class="small text-uppercase text-decoration-none fs12 fw-bold">Show all delivery options</a>
+          </dl>
+        </div>
+
+        <div class="d-flex justify-content-between w-100">
+          <div class="">
+            <h2 class="h5">Total <span class="fs-6 fw-normal">(Including TAX)</span></h2>
+          </div>
+          
+        </div>
+
+
+
+    </div>
+
+
+
+</main> {% endcomment %}
 
 <script>
   // Delete Item

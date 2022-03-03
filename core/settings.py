@@ -14,10 +14,7 @@ SECRET_KEY = 'django-insecure-*o3=-ci_b42w3yv^)=8lc%x7l0#er24k7#e#2erub(^rga@gz=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['yourdomain.com', '127.0.0.1']
-
-
-# Application definition
+ALLOWED_HOSTS = ['yourdomain.com', '127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -28,6 +25,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'store',
     'basket',
+    'account',
+    'orders',
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -86,7 +86,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Africa/Nairobi'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -102,3 +102,20 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# Basket session ID
+BASKET_SESSION_ID = 'basket'
+
+# Stripe Payment
+PUBLISHABLE_KEY = 'pk_test_51KZGVDDQX12IygYDfN3JVB6Zf5rKNZBDfSO3rXKYjqXQhG3rPFcetRFIK6Ty0ZL6sU0m8J75Ujgy4i3OB5YCKEww00oSdDqXrE'
+SECRET_KEY = 'sk_test_51KZGVDDQX12IygYDiaMRIIzacYtDlALcZ5dCu3HZd731xahec8KIB3MXaEy1LiEwI23kHNj3QevJjtXmsy7Lm0jm003VpCEi1m'
+# STRIPE_ENDPOINT_SECRET = ''
+# stripe listen --forward-to localhost:8000/payment/webhook/
+
+# Custom user model
+AUTH_USER_MODEL = 'account.UserBase'
+LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_URL = '/account/login/'
+
+# Email setting
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

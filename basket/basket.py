@@ -1,5 +1,7 @@
 from decimal import Decimal
 
+from django.conf import settings
+
 from store.models import Product
 
 
@@ -11,9 +13,9 @@ class Basket():
 
     def __init__(self, request):
         self.session = request.session
-        basket = self.session.get('skey')
-        if 'skey' not in request.session:
-            basket = self.session['skey'] = {}
+        basket = self.session.get(settings.BASKET_SESSION_ID)
+        if settings.BASKET_SESSION_ID not in request.session:
+            basket = self.session[settings.BASKET_SESSION_ID] = {}
         self.basket = basket
 
     def add(self, product, qty):
@@ -61,8 +63,20 @@ class Basket():
             self.basket[product_id]['qty'] = qty
         self.save()
 
-    def get_total_price(self):
+    def get_subtotal_price(self):
         return sum(Decimal(item['price']) * item['qty'] for item in self.basket.values())
+
+    def get_total_price(self):
+
+        subtotal = sum(Decimal(item['price']) * item['qty'] for item in self.basket.values())
+
+        if subtotal == 0:
+            shipping = Decimal(0.00)
+        else:
+            shipping = Decimal(11.50)
+
+        total = subtotal + Decimal(shipping)
+        return total
 
     def delete(self, product):
         """
@@ -72,17 +86,18 @@ class Basket():
 
         if product_id in self.basket:
             del self.basket[product_id]
-            print(product_id)
             self.save()
+
+    def clear(self):
+        # Remove basket from session
+        del self.session[settings.BASKET_SESSION_ID]
+        self.save()
 
     def save(self):
         self.session.modified = True
 
 
-
-
-
-""" 
+"""
 Code in this file has been inspried/reworked from other known works. Plese ensure that
 the License below is included in any of your work that is directly copied from
 this source file.
@@ -108,5 +123,5 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE. 
+SOFTWARE.
 """
